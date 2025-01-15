@@ -1,6 +1,6 @@
 # Laravel + react + shadcn/ui + InertiaJS Boilerplate
 
-![Laravel + react + shadcn/ui + InertiaJS Boilerplate](https://raw.githubusercontent.com/mahmudz/laravel-shadcn-app-panel/main/public/repository-cover.png)
+![Laravel + react + shadcn/ui + InertiaJS Boilerplate](https://raw.githubusercontent.com/arismetyogi/laravel-react-admin-boilerplate/main/public/repository-cover.png)
 
 This is a template to start building a custom user/admin panel quickly.
 Feel free to customize this template to fit the specific needs of your Laravel application!
