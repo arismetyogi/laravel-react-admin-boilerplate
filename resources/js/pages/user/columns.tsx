@@ -62,6 +62,34 @@ columns = [
     },
   },
   {
+    accessorKey: "roles",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Roles
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "permissions",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Permissions
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
     accessorKey: "action",
     header: "Action",
     cell: ({row}) => {
@@ -83,7 +111,7 @@ columns = [
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link className="w-full text-left" href={route('usersg.destroy', user.id)} method="delete">
+              <Link className="w-full text-left" href={route('users.destroy', user.id)} method="delete">
                 Delete
               </Link> </DropdownMenuItem>
           </DropdownMenuContent>
