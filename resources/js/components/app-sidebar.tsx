@@ -25,6 +25,7 @@ import {Link, usePage} from "@inertiajs/react";
 import {PageProps} from "@/types";
 import {NavMainUser} from "@/components/nav-main-user";
 import {can} from "@/helper";
+import {NavMainSetting} from "@/components/nav-main-setting";
 
 const data = {
   navMain: [
@@ -127,8 +128,11 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain}/>
+        {can(auth.user, 'manage-departments') && (
+          <NavMainSetting items={data.navSetting}/>
+        )}
         {can(auth.user, 'manage-users') && (
-        <NavMainUser items={data.navUser}/>
+          <NavMainUser items={data.navUser}/>
         )}
         <SidebarGroup>
           <SidebarMenu>

@@ -6,6 +6,7 @@ export function can(user: User, permission: string): boolean {
 }
 
 export function hasRole(user: User, role: string): boolean {
+  if (!user || !user.roles) return false;
   return user.roles.includes(role);
 }
 
