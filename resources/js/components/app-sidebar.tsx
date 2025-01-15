@@ -5,7 +5,7 @@ import {
   Command,
   Frame, Home,
   LifeBuoy,
-  Send,
+  Send, SettingsIcon,
   SquareTerminal,
 } from "lucide-react"
 
@@ -25,11 +25,6 @@ import {Link, usePage} from "@inertiajs/react";
 import {PageProps} from "@/types";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -53,6 +48,19 @@ const data = {
       url: "#",
       icon: Frame,
   },
+
+    {
+      title: "Settings",
+      url: "#",
+      icon: SettingsIcon,
+      isActive: true,
+      items: [
+        {
+          title: "Users",
+          url: "/users",
+        },
+      ],
+    },
   ],
   navSecondary: [
     {
@@ -72,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { auth } = usePage<PageProps>().props;
 
     return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="inset" collapsible={"icon"} {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -82,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Acme Inc</span>
+                  <span className="truncate font-semibold">KF Apps</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </Link>

@@ -1,7 +1,10 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
+      './storage/framework/views/*.php',
       "./resources/views/**/*.blade.php",
       "./resources/js/**/*.tsx",
   ],
@@ -90,4 +93,4 @@ module.exports = {
   	}
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

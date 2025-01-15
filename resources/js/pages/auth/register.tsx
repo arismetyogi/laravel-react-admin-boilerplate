@@ -16,6 +16,7 @@ import { InputError } from "@/components/ui/input-error";
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
+        username: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -59,6 +60,20 @@ export default function Register() {
                                     required
                                 />
                                 <InputError message={errors.name} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Username</Label>
+                                <Input
+                                    id="username"
+                                    type="username"
+                                    placeholder="userName"
+                                    onChange={(e) =>
+                                        setData("username", e.target.value)
+                                    }
+                                    value={data.username}
+                                    required
+                                />
+                                <InputError message={errors.username} />
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
