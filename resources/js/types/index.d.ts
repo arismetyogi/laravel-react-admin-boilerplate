@@ -1,11 +1,12 @@
 import {LucideProps} from "lucide-react";
 import {ForwardRefExoticComponent, ReactNode, RefAttributes} from "react";
+import {Config} from "ziggy-js";
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  email_verified_at: string;
+  email_verified_at?: string;
   roles: string[];
   permissions: string[];
 }
@@ -21,6 +22,7 @@ export type PageProps<
   auth: {
     user: User;
   };
+  ziggy: Config & { location: string };
 };
 
 export type MenuItemProp = {

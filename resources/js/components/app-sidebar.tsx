@@ -105,7 +105,7 @@ const data = {
 
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const {auth} = usePage<PageProps>().props;
-  console.log(auth);
+
   return (
     <Sidebar variant="inset" collapsible={"icon"} {...props}>
       <SidebarHeader>
