@@ -49,16 +49,18 @@ const data = {
         },
       ],
     },
-    {
-      title: "Data BM",
-      url: "#",
-      icon: Frame,
-    },
+  ],
+  navSetting:[
     {
       title: "System Settings",
       url: "#",
       icon: Settings2Icon,
       items: [
+        {
+          title: "Data BM",
+          url: "#",
+          icon: Frame,
+        },
         {
           title: "Outlet",
           url: "#",
@@ -102,7 +104,7 @@ const data = {
 
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   const {auth} = usePage<PageProps>().props;
-
+  console.log(auth);
   return (
     <Sidebar variant="inset" collapsible={"icon"} {...props}>
       <SidebarHeader>
@@ -125,9 +127,9 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain}/>
-        {can(auth.user, 'manage-users') &&
+        {can(auth.user, 'manage-users') && (
         <NavMainUser items={data.navUser}/>
-        }
+        )}
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
