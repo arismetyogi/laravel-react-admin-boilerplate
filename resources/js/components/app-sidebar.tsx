@@ -83,7 +83,7 @@ const data = {
   ],
   navUser: [
     {
-      title: "User Management",
+      title: "Index Management",
       url: "#",
       icon: SettingsIcon,
       isActive: true,

@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class
         ]);
-        // User::factory(10)->create();
+        // Index::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Admin Index',
             'username' => 'admin',
             'email' => 'admin@admin.com',
         ])->assignRole(Roles::SuperAdmin);

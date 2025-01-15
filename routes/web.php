@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,10 +17,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
+    Route::middleware(['role:'.\App\Enum\Roles::SuperAdmin->value])->group(function () {
+        Route::resource('users', UserController::class);
+    });
+
     Route::middleware(['can:'.\App\Enum\Permissions::ManageUsers->value])->group(function () {
-        Route::get('/users', function () {
-            return Inertia::render('user');
-        })->name('users');
+        Route::resource('users', UserController::class);
     });
 
     Route::post('/logout', function () {
