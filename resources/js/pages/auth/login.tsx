@@ -79,6 +79,7 @@ export default function Login({
                   onChange={(e) =>
                     setData("creds", e.target.value)
                   }
+                  required
                 />
                 <InputError message={errors.creds}/>
               </div>
@@ -99,7 +100,7 @@ export default function Login({
                   onChange={(e) =>
                     setData("password", e.target.value)
                   }
-
+                  required
                 />
                 <InputError message={errors.password}/>
               </div>
