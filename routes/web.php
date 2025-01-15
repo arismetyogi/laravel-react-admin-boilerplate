@@ -16,9 +16,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('/users', function () {
-        return Inertia::render('user');
-    })->name('users');
+    Route::middleware(['can:'.\App\Enum\Permissions::ManageUsers->value])->group(function () {
+        Route::get('/users', function () {
+            return Inertia::render('user');
+        })->name('users');
+    });
 
     Route::post('/logout', function () {
         return redirect('/login');

@@ -5,8 +5,8 @@ import {
   Command,
   Frame, Home,
   LifeBuoy,
-  Send, Settings2Icon, SettingsIcon,
-  SquareTerminal,
+  Send, Settings2Icon, SettingsIcon, SidebarIcon,
+  SquareTerminal, UserIcon,
 } from "lucide-react"
 
 import {NavMain} from "@/components/nav-main"
@@ -15,7 +15,7 @@ import {NavUser} from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  SidebarFooter, SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/sidebar"
 import {Link, usePage} from "@inertiajs/react";
 import {PageProps} from "@/types";
+import {NavMainUser} from "@/components/nav-main-user";
 
 const data = {
   navMain: [
@@ -63,22 +64,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "User Management",
-      url: "#",
-      icon: SettingsIcon,
-      isActive: true,
-      items: [
-        {
-          title: "Users",
-          url: "/users",
-        },
-        {
-          title: "Profile",
-          url: "/profile",
-        },
-      ],
-    },
   ],
   navSecondary: [
     {
@@ -92,6 +77,26 @@ const data = {
       icon: Send,
     },
   ],
+  navUser: [
+    {
+      title: "User Management",
+      url: "#",
+      icon: SettingsIcon,
+      isActive: true,
+      items: [
+        {
+          title: "Users",
+          url: "/users",
+        },
+      ],
+    },
+  ],
+  profile: [
+    {
+      title: "Profile",
+      url: "/profile",
+    },
+  ]
 }
 
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
@@ -119,6 +124,20 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain}/>
+        
+        <NavMainUser items={data.navUser}/>
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" asChild>
+                <Link href={route('profile.edit')}>
+                  <UserIcon className='size-4'/>
+                  My Profile
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
         <NavSecondary items={data.navSecondary} className="mt-auto"/>
       </SidebarContent>
       <SidebarFooter>

@@ -23,6 +23,8 @@ export default function Login({
 }) {
   const {data, setData, post, processing, errors, setError, reset} = useForm({
     creds: "",
+    username: "",
+    email: "",
     password: "",
     remember: false,
   });
@@ -35,7 +37,7 @@ export default function Login({
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    setError({creds: "", password: "", remember: ""}); // Clear errors before submitting
+    setError({creds: "", password: "", remember: "", email: "", username: ""}); // Clear errors before submitting
 
     try {
       const response = await axios.post("/login", data);
@@ -81,7 +83,8 @@ export default function Login({
                   }
                   required
                 />
-                <InputError message={errors.creds}/>
+                <InputError message={errors.username}/>
+                <InputError message={errors.email}/>
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
