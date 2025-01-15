@@ -5,13 +5,13 @@ import {
   Command,
   Frame, Home,
   LifeBuoy,
-  Send, SettingsIcon,
+  Send, Settings2Icon, SettingsIcon,
   SquareTerminal,
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import {NavMain} from "@/components/nav-main"
+import {NavSecondary} from "@/components/nav-secondary"
+import {NavUser} from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -27,30 +27,44 @@ import {PageProps} from "@/types";
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
+      title: "Home",
+      url: "/",
       icon: Home,
     },
     {
-      title: "Projects",
+      title: "Managemen Karyawan",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Data Karyawan",
+          url: "#",
+        },
+        {
+          title: "Data Payroll",
           url: "#",
         },
       ],
     },
-  {
-      title: "Design Engineering",
+    {
+      title: "Data BM",
       url: "#",
       icon: Frame,
-  },
-
+    },
     {
-      title: "Settings",
+      title: "System Settings",
+      url: "#",
+      icon: Settings2Icon,
+      items: [
+        {
+          title: "Outlet",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "User Management",
       url: "#",
       icon: SettingsIcon,
       isActive: true,
@@ -58,6 +72,10 @@ const data = {
         {
           title: "Users",
           url: "/users",
+        },
+        {
+          title: "Profile",
+          url: "/profile",
         },
       ],
     },
@@ -76,18 +94,19 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { auth } = usePage<PageProps>().props;
+export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+  const {auth} = usePage<PageProps>().props;
 
-    return (
+  return (
     <Sidebar variant="inset" collapsible={"icon"} {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href={route('dashboard')}>
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                <div
+                  className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Command className="size-4"/>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">KF Apps</span>
@@ -99,11 +118,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={data.navMain}/>
+        <NavSecondary items={data.navSecondary} className="mt-auto"/>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={auth.user} />
+        <NavUser user={auth.user}/>
       </SidebarFooter>
     </Sidebar>
   )

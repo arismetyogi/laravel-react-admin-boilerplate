@@ -10,9 +10,10 @@ export default function User() {
 
             <div className="flex flex-1 flex-col gap-4 h-full">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                  User
                 </div>
-                <div className="flex-1 rounded-xl bg-muted/50 h-full" />
+              <div className="flex-1 rounded-xl bg-muted/50 h-full p-4">
+                Test User
+              </div>
             </div>
         </AuthenticatedLayout>
     );
