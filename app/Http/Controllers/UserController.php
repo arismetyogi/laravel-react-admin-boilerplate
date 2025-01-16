@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\Permissions;
+use App\Enum\Roles;
 use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -43,7 +47,11 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return Inertia::render('user/edit', [
-            'user' => $user
+            'user' => new AuthUserResource($user),
+            'roles' => Role::all(),
+            'roleLabels' => Roles::labels(),
+            'permissions' => Permission::all(),
+            'permissionLabels' => Permissions::labels()
         ]);
     }
 

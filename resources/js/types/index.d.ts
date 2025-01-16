@@ -8,11 +8,12 @@ export interface User {
   name: string;
   email: string;
   email_verified_at?: string;
-  roles: Role[];
-  permissions: Role[];
+  roles: string[];
+  permissions: string[];
 }
 
 type Role = {
+  id: number;
   name: string;
   pivot?: {
     model_type: string;
