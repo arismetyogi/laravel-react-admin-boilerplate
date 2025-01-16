@@ -1,6 +1,6 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import {CellContext, ColumnDef} from "@tanstack/react-table"
 import {User} from "@/types";
 import { Button } from "@/components/ui/button"
 import {
@@ -74,6 +74,12 @@ columns = [
         </Button>
       )
     },
+    cell: ({ row }) =>
+      Array.isArray(row.original.roles)
+        ? row.original.roles
+          .map((role: { name: string }) => role.name) // Extract the "name" field from each role
+          .join(", ")
+        : "No roles assigned", // Fallback for missing roles
   },
   {
     accessorKey: "permissions",
@@ -88,6 +94,12 @@ columns = [
         </Button>
       )
     },
+    cell: ({ row }) =>
+      Array.isArray(row.original.permissions)
+        ? row.original.permissions
+          .map((role: { name: string }) => role.name) // Extract the "name" field from each role
+          .join(", ")
+        : "No permissions assigned", // Fallback for missing roles
   },
   {
     accessorKey: "action",

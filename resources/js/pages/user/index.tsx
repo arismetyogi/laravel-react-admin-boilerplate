@@ -5,7 +5,12 @@ import {can} from "@/helper";
 import {DataTable} from "@/components/table/data-table";
 import {columns} from "@/pages/user/columns";
 
-export default function Index({auth, users} : PageProps<{users: User[]}>) {
+export default function Index({auth, users}: PageProps<{users: User[]}>) {
+  console.log(users.map(user => ({
+    name: user.name,
+    roles: user.roles,
+    permissions: user.permissions
+  })));
     return (
         <AuthenticatedLayout
             header="Users"

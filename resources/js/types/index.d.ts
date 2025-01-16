@@ -7,9 +7,19 @@ export interface User {
   name: string;
   email: string;
   email_verified_at?: string;
-  roles: string[];
-  permissions: string[];
+  roles: Role[];
+  permissions: Role[];
 }
+
+type Role = {
+  name: string;
+  pivot?: {
+    model_type: string;
+    model_id: number;
+    role_id: number;
+  };
+};
+
 
 export type PaginatedData< T = any > = {
   data: T[];
