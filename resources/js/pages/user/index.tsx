@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/layouts/authenticated-layout";
 import { Head } from "@inertiajs/react";
-import {PageProps, PaginatedData, User} from "@/types";
+import {PageProps, User} from "@/types";
 import {can} from "@/helper";
 import {DataTable} from "@/components/table/data-table";
 import {columns} from "@/pages/user/columns";

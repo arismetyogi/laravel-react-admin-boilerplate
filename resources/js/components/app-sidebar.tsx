@@ -5,8 +5,8 @@ import {
   Command,
   Frame, Home,
   LifeBuoy,
-  Send, Settings2Icon, SettingsIcon, SidebarIcon,
-  SquareTerminal, UserIcon,
+  Send, Settings2Icon,
+  SquareTerminal, UserIcon, Users2Icon,
 } from "lucide-react"
 
 import {NavMain} from "@/components/nav-main"
@@ -83,9 +83,9 @@ const data = {
   ],
   navUser: [
     {
-      title: "Index Management",
+      title: "User Management",
       url: "#",
-      icon: SettingsIcon,
+      icon: Users2Icon,
       isActive: true,
       items: [
         {
@@ -99,6 +99,7 @@ const data = {
     {
       title: "Profile",
       url: "/profile",
+      icon: UserIcon
     },
   ]
 }
@@ -134,18 +135,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
         {can(auth.user, 'manage-users') && (
           <NavMainUser items={data.navUser}/>
         )}
-        <SidebarGroup>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton size="lg" asChild>
-                <Link href={route('profile.edit')}>
-                  <UserIcon className='size-4'/>
-                  My Profile
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+        <NavSecondary items={data.profile}/>
         <NavSecondary items={data.navSecondary} className="mt-auto"/>
       </SidebarContent>
       <SidebarFooter>
