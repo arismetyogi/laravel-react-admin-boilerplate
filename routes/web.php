@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::middleware(['can:'.\App\Enum\Permissions::ManageUsers->value])->group(function () {
-        Route::resource('users', UserController::class);
+        Route::resource('user', UserController::class);
     });
 
     Route::post('/logout', function () {

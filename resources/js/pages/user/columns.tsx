@@ -106,12 +106,12 @@ columns = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator/>
             <DropdownMenuItem>
-              <Link className="w-full text-left" href={route('users.edit', user.id)}>
+              <Link className="w-full text-left" href={route('user.edit', user.id)}>
                 Edit
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link className="w-full text-left" href={route('users.destroy', user.id)} method="delete">
+              <Link className="w-full text-left" href={route('user.destroy', user.id)} method="delete">
                 Delete
               </Link> </DropdownMenuItem>
           </DropdownMenuContent>

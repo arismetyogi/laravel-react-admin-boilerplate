@@ -95,7 +95,7 @@ const data = {
       items: [
         {
           title: "Users",
-          url: "/users",
+          url: "/user",
         },
       ],
     },
@@ -140,7 +140,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
         {can(auth.user, 'manage-users') && (
           <NavMainUser items={data.navUser}/>
         )}
-        <NavSecondary items={data.profile}/>
+        <NavSecondary items={data.profile} />
         <NavSecondary items={data.navSecondary} className="mt-auto"/>
       </SidebarContent>
       <SidebarFooter>
