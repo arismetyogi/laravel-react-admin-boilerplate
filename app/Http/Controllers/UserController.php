@@ -60,7 +60,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'roles' => ['sometimes', 'array'],
+            'permissions' => ['sometimes', 'array'],
+        ]);
+
+        $user->syncRoles($data['roles']);
+        $user->syncPermissions($data['permissions']);
+
+        return redirect()->to(route('user.index'))->with(['success' => 'User roles and permissions has been updated']);
     }
 
 }

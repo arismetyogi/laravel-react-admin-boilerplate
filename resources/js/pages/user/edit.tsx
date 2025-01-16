@@ -63,7 +63,7 @@ export default function Edit({roles, permissions, user, roleLabels, permissionLa
         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8 justify-around">
           <form onSubmit={updateUser}>
             <div className="w-fit items-center space-y-4 justify-items-center">
-              <div className="w-1/4">
+              <div className="w-full">
                 <InputLabel htmlFor="username" value="Username"/>
 
                 <TextInput
@@ -72,6 +72,7 @@ export default function Edit({roles, permissions, user, roleLabels, permissionLa
                   value={data.username}
                   onChange={(e:any) => setData('username', e.target.value)}
                   autoComplete="username"
+                  disabled
                 />
 
                 <InputError className="mt-2" message={errors.username}/>
@@ -86,7 +87,7 @@ export default function Edit({roles, permissions, user, roleLabels, permissionLa
                   value={data.name}
                   onChange={(e:any) => setData('name', e.target.value)}
                   required
-                  isFocused
+                  disabled
                   autoComplete="name"
                 />
 
@@ -102,7 +103,7 @@ export default function Edit({roles, permissions, user, roleLabels, permissionLa
                   value={data.email}
                   onChange={(e:any) => setData('email', e.target.value)}
                   required
-                  isFocused
+                  disabled
                   autoComplete="email"
                 />
 

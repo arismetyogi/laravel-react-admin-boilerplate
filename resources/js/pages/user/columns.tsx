@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {ArrowUpDown, CheckCircle2Icon, CheckIcon, MoreHorizontal, XCircleIcon, XIcon} from "lucide-react";
+import {ArrowUpDown, CheckCircle2Icon, MoreHorizontal, XCircleIcon} from "lucide-react";
 import {Link} from "@inertiajs/react";
 
 // This type is used to define the shape of our data.
