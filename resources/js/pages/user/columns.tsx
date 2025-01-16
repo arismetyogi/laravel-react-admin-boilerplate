@@ -1,6 +1,6 @@
 "use client"
 
-import {CellContext, ColumnDef} from "@tanstack/react-table"
+import {ColumnDef} from "@tanstack/react-table"
 import {User} from "@/types";
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {ArrowUpDown, MoreHorizontal} from "lucide-react";
+import {ArrowUpDown, CheckCircle2Icon, CheckIcon, MoreHorizontal, XCircleIcon, XIcon} from "lucide-react";
 import {Link} from "@inertiajs/react";
 
 // This type is used to define the shape of our data.
@@ -19,6 +19,25 @@ import {Link} from "@inertiajs/react";
 
 export let columns: ColumnDef<User>[];
 columns = [
+  {
+    accessorKey: "#",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          #
+        </Button>
+      )
+    },
+    cell: ({ row, table }) => {
+      const nonSortedIdx =
+        table.getSortedRowModel()?.flatRows?.findIndex((flatRow) => flatRow.id === row.id) || 0
+
+      return <div className="w-fit pl-4">{nonSortedIdx+1}{' '}</div>;
+    },
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -59,6 +78,32 @@ columns = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
+    },
+  },
+  {
+    accessorKey: "email_verified_at",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Verified
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const isVerified = row.original.email_verified_at !== null; // Check if verified
+      return (
+        <div className="flex items-center justify-center">
+          {isVerified ? (
+            <CheckCircle2Icon className="h-5 w-5 text-green-500" /> // Green check icon
+          ) : (
+            <XCircleIcon className="h-5 w-5 text-red-500" /> // Red cross icon
+          )}
+        </div>
+      );
     },
   },
   {
