@@ -111,7 +111,6 @@ export default function Edit({roles, permissions, user, roleLabels, permissionLa
               </div>
 
               <div className="flex-1">
-              <pre>{JSON.stringify(data, undefined, 2)}</pre>
                 <InputLabel htmlFor="roles" value="Roles"/>
 
                 {roles.map((role: any) => (

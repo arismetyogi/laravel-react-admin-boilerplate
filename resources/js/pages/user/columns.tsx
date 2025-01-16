@@ -2,7 +2,7 @@
 
 import {ColumnDef} from "@tanstack/react-table"
 import {User} from "@/types";
-import { Button } from "@/components/ui/button"
+import {Button} from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ export let columns: ColumnDef<User>[];
 columns = [
   {
     accessorKey: "#",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
@@ -31,76 +31,76 @@ columns = [
         </Button>
       )
     },
-    cell: ({ row, table }) => {
+    cell: ({row, table}) => {
       const nonSortedIdx =
         table.getSortedRowModel()?.flatRows?.findIndex((flatRow) => flatRow.id === row.id) || 0
 
-      return <div className="w-fit pl-4">{nonSortedIdx+1}{' '}</div>;
+      return <div className="w-fit pl-4">{nonSortedIdx + 1}{' '}</div>;
     },
   },
   {
     accessorKey: "name",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Full Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4"/>
         </Button>
       )
     },
   },
   {
     accessorKey: "username",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           UserName
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4"/>
         </Button>
       )
     },
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4"/>
         </Button>
       )
     },
   },
   {
     accessorKey: "email_verified_at",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Verified
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4"/>
         </Button>
       )
     },
-    cell: ({ row }) => {
+    cell: ({row}) => {
       const isVerified = row.original.email_verified_at !== null; // Check if verified
       return (
         <div className="flex items-center justify-center">
           {isVerified ? (
-            <CheckCircle2Icon className="h-5 w-5 text-green-500" /> // Green check icon
+            <CheckCircle2Icon className="h-5 w-5 text-green-500"/> // Green check icon
           ) : (
-            <XCircleIcon className="h-5 w-5 text-red-500" /> // Red cross icon
+            <XCircleIcon className="h-5 w-5 text-red-500"/> // Red cross icon
           )}
         </div>
       );
@@ -108,69 +108,109 @@ columns = [
   },
   {
     accessorKey: "roles",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Roles
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4"/>
         </Button>
       )
     },
-    cell: ({ row }) =>
-      Array.isArray(row.original.roles)
-        ? row.original.roles.join(", ")
-        : "No roles assigned", // Fallback for missing roles
+    cell: ({row}) => (
+      <div className="flex flex-wrap gap-2">
+        {Array.isArray(row.original.roles) && row.original.roles.length > 0
+          ? row.original.roles.map((role: string, index: number) => {
+            const roleColor =
+              role === "admin"
+                ? "text-blue-700"
+                : role === "user"
+                  ? "text-gray-700"
+                  : role === "super-admin"
+                    ? "text-red-700"
+                    : "text-green-700"; // Default color for other roles
+            return (
+              <span
+                key={index}
+                className={`inline-block px-2 font-normal ${roleColor}`}
+              >
+            {role == 'user' ? 'User' : (role == 'admin' ? 'Admin' : 'Super Admin')}
+          </span>
+            );
+          })
+          : ''}
+      </div>
+    )
+},
+{
+  accessorKey: "permissions",
+    header
+:
+  ({column}) => {
+    return (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Permissions
+        <ArrowUpDown className="ml-2 h-4 w-4"/>
+      </Button>
+    )
   },
-  {
-    accessorKey: "permissions",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Permissions
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) =>
-      Array.isArray(row.original.permissions)
-        ? row.original.permissions
-          .join(", ")
-        : "No permissions assigned", // Fallback for missing roles
+    cell
+:
+  ({row}) => (
+    <div className="flex flex-wrap gap-2">
+      {Array.isArray(row.original.permissions) && row.original.permissions.length > 0
+        ? row.original.permissions.map((permission: string, index: number) => (
+          <span
+            key={index}
+            className="inline-block rounded-full bg-green-100 px-2 text-xs font-normal text-green-700"
+          >
+            {permission}
+          </span>
+        ))
+        : <span className="text-gray-500 text-xs px-2">No permissions assigned</span>}
+    </div>
+  ),
+}
+,
+{
+  accessorKey: "action",
+    header
+:
+  "Action",
+    cell
+:
+  ({row}) => {
+    let user = row.original;
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4"/>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator/>
+          <DropdownMenuItem>
+            <Link className="w-full text-left" href={route('user.edit', user.id)}>
+              Edit
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link className="w-full text-left" href={route('user.destroy', user.id)} method="delete">
+              Delete
+            </Link> </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
   },
-  {
-    accessorKey: "action",
-    header: "Action",
-    cell: ({row}) => {
-      let user = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4"/>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator/>
-            <DropdownMenuItem>
-              <Link className="w-full text-left" href={route('user.edit', user.id)}>
-                Edit
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link className="w-full text-left" href={route('user.destroy', user.id)} method="delete">
-                Delete
-              </Link> </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+}
+,
+]
+;
