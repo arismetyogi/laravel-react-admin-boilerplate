@@ -3,10 +3,14 @@
 import * as React from "react"
 import {
   Command,
-  Frame, Home,
+  Frame,
+  Home,
   LifeBuoy,
-  Send, Settings2Icon,
-  SquareTerminal, UserIcon, Users2Icon,
+  MilestoneIcon,
+  Send,
+  Settings2Icon,
+  UserIcon,
+  Users2Icon,
 } from "lucide-react"
 
 import {NavMain} from "@/components/nav-main"
@@ -15,7 +19,7 @@ import {NavUser} from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter, SidebarGroup,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -30,22 +34,22 @@ import {NavMainSetting} from "@/components/nav-main-setting";
 const data = {
   navMain: [
     {
-      title: "Home",
+      title: "Dashboard",
       url: "/",
       icon: Home,
     },
     {
-      title: "Managemen Karyawan",
+      title: "Employee Management",
       url: "#",
-      icon: SquareTerminal,
+      icon: MilestoneIcon,
       isActive: true,
       items: [
         {
-          title: "Data Karyawan",
+          title: "Employee Data",
           url: "#",
         },
         {
-          title: "Data Payroll",
+          title: "Payrolls",
           url: "#",
         },
       ],
@@ -58,12 +62,12 @@ const data = {
       icon: Settings2Icon,
       items: [
         {
-          title: "Data BM",
+          title: "Departments",
           url: "#",
           icon: Frame,
         },
         {
-          title: "Outlet",
+          title: "Units",
           url: "#",
         },
       ],
@@ -82,6 +86,7 @@ const data = {
     },
   ],
   navUser: [
+
     {
       title: "User Management",
       url: "#",
