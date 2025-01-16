@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AuthUserResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         Return Inertia::render('user/index', [
-            'users' => User::with(['roles:name', 'permissions:name'])->get()
+        'users' => AuthUserResource::collection(User::all())->collection->toArray(),
         ]);
     }
 

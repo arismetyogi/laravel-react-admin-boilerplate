@@ -76,9 +76,7 @@ columns = [
     },
     cell: ({ row }) =>
       Array.isArray(row.original.roles)
-        ? row.original.roles
-          .map((role: { name: string }) => role.name) // Extract the "name" field from each role
-          .join(", ")
+        ? row.original.roles.join(", ")
         : "No roles assigned", // Fallback for missing roles
   },
   {
@@ -97,7 +95,6 @@ columns = [
     cell: ({ row }) =>
       Array.isArray(row.original.permissions)
         ? row.original.permissions
-          .map((role: { name: string }) => role.name) // Extract the "name" field from each role
           .join(", ")
         : "No permissions assigned", // Fallback for missing roles
   },
