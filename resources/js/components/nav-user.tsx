@@ -8,7 +8,7 @@ import {
 
 import {
   Avatar,
-  AvatarFallback,
+  AvatarFallback, AvatarImage,
 } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -28,6 +28,15 @@ import {
 import {User} from "@/types";
 import {Link} from "@inertiajs/react";
 
+const getInitials = (name: string): string => {
+  // Split the name into parts by spaces, filter out empty parts
+  const nameParts = name.split(' ').filter(Boolean);
+
+  // Get the first letter of each part, join them, and convert to uppercase
+  const initials = nameParts.map(part => part[0].toUpperCase()).join('');
+
+  return initials;
+};
 export function NavUser({
   user,
 }: {
@@ -35,8 +44,10 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
 
+  const initials = getInitials(user.name)
+
   return (
-    <SidebarMenu>
+   <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -44,9 +55,9 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-8 w-8 rounded-full">
                 {/*<AvatarImage src={user.avatar} alt={user.name} />*/}
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-full">{initials}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -63,9 +74,9 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-full">
                   {/*<AvatarImage src={user.avatar} alt={user.name} />*/}
-                  <AvatarFallback className="rounded-lg">AC</AvatarFallback>
+                  <AvatarFallback className="rounded-full">{initials}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
