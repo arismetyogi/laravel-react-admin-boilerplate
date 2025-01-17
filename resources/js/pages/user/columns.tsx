@@ -143,74 +143,50 @@ columns = [
           : ''}
       </div>
     )
-},
-{
-  accessorKey: "permissions",
-    header
-:
-  ({column}) => {
-    return (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Permissions
-        <ArrowUpDown className="ml-2 h-4 w-4"/>
-      </Button>
-    )
   },
-    cell
-:
-  ({row}) => (
-    <div className="flex flex-wrap gap-2">
-      {Array.isArray(row.original.permissions) && row.original.permissions.length > 0
-        ? row.original.permissions.map((permission: string, index: number) => (
-          <span
-            key={index}
-            className="inline-block rounded-full bg-green-100 px-2 text-xs font-normal text-green-700"
+  {
+    accessorKey: "permissions",
+    header:
+      ({column}) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
+            Permissions
+            <ArrowUpDown className="ml-2 h-4 w-4"/>
+          </Button>
+        )
+      },
+    cell:
+      ({row}) => (
+        <div className="flex flex-wrap gap-2">
+          {Array.isArray(row.original.permissions) && row.original.permissions.length > 0
+            ? row.original.permissions.map((permission: string, index: number) => (
+              <span
+                key={index}
+                className="inline-block rounded-full bg-green-100 px-2 text-xs font-normal text-green-700"
+              >
             {permission}
           </span>
-        ))
-        : <span className="text-gray-500 text-xs px-2">No permissions assigned</span>}
-    </div>
-  ),
-}
-,
-{
-  accessorKey: "action",
-    header
-:
-  "Action",
-    cell
-:
-  ({row}) => {
-    let user = row.original;
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4"/>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuSeparator/>
-          <DropdownMenuItem>
-            <Link className="w-full text-left" href={route('user.edit', user.id)}>
-              Edit
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link className="w-full text-left" href={route('user.destroy', user.id)} method="delete">
-              Delete
-            </Link> </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
+            ))
+            : <span className="text-gray-500 text-xs px-2">No permissions assigned</span>}
+        </div>
+      ),
+  }
+  ,
+  {
+    accessorKey: "action",
+    header:
+      "Action",
+    cell:
+      ({row}) => {
+        let user = row.original;
+        return (
+          <Link className="w-full text-left text-blue-500" href={route('user.edit', user.id)}>
+            Edit
+          </Link>
+        );
+      },
   },
-}
-,
-]
-;
+];
