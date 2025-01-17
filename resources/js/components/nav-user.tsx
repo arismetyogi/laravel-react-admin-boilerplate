@@ -1,15 +1,8 @@
 "use client"
 
-import {
-  BadgeCheck,
-  ChevronsUpDown,
-  LogOut,
-} from "lucide-react"
+import {BadgeCheck, ChevronsUpDown, LogOut,} from "lucide-react"
 
-import {
-  Avatar,
-  AvatarFallback, AvatarImage,
-} from "@/components/ui/avatar"
+import {Avatar, AvatarFallback,} from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,12 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
+import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/components/ui/sidebar"
 import {User} from "@/types";
 import {Link} from "@inertiajs/react";
 
@@ -33,9 +21,7 @@ const getInitials = (name: string): string => {
   const nameParts = name.split(' ').filter(Boolean);
 
   // Get the first letter of each part, join them, and convert to uppercase
-  const initials = nameParts.map(part => part[0].toUpperCase()).join('');
-
-  return initials;
+  return nameParts.map(part => part[0].toUpperCase()).join('');
 };
 export function NavUser({
   user,

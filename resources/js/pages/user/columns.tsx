@@ -3,15 +3,7 @@
 import {ColumnDef} from "@tanstack/react-table"
 import {User} from "@/types";
 import {Button} from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {ArrowUpDown, CheckCircle2Icon, MoreHorizontal, XCircleIcon} from "lucide-react";
+import {ArrowUpDown, CheckCircle2Icon, XCircleIcon} from "lucide-react";
 import {Link} from "@inertiajs/react";
 
 // This type is used to define the shape of our data.
