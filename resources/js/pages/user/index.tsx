@@ -27,7 +27,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Toaster, toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import ConfirmAlert from "@/components/confirm-alert";
 import AddUserSheet from "@/components/add-user-sheet";
 

@@ -9,6 +9,8 @@
         "isolatedModules": true,
         "target": "ESNext",
         "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "paths": {
