@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Toaster, toast } from "react-hot-toast";
 import ConfirmAlert from "@/components/confirm-alert";
+import AddUserSheet from "@/components/add-user-sheet";
 
 type AlertType = "delete" | "activate" | "block"
 
@@ -37,6 +38,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertType, setAlertType] = useState<AlertType>();
   const [selectedUser, setSelectedUser] = useState<User>();
+  const [openAddUserSheet, setOpenAddUserSheet] = useState(false);
 
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
@@ -235,8 +237,8 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
       {can(auth.user, 'manage-users') &&
         <div className="flex flex-1 flex-col gap-4 h-full">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+          <Button onClick={() => setOpenAddUserSheet(true)}>Create New User</Button>
           </div>
-          <Button>Create New User</Button>
           <div className="flex-1 rounded-xl bg-muted/50 h-full p-4">
             <DataTable columns={columns} data={users}/>
 
@@ -246,6 +248,11 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
               open={openAlert}
               onOpenChange={setOpenAlert}
               onConfirm={alertType === "delete" ? handleDelete : handleUpdateStatus}
+            />
+
+            <AddUserSheet
+              open={openAddUserSheet}
+              onOpenChange={setOpenAddUserSheet}
             />
 
             <Toaster />
