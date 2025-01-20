@@ -10,7 +10,6 @@ import ColumnHeader from "@/components/table/column-header";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {cn, getAvatar} from "@/lib/utils";
 import {
-  ArrowUpDown,
   CheckCircle2Icon,
   Edit,
   LockKeyhole,
@@ -30,6 +29,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import ConfirmAlert from "@/components/confirm-alert";
 import AddUserSheet from "@/components/add-user-sheet";
+import EditUserSheet from "@/components/edit-user-sheet";
 
 type AlertType = "delete" | "activate" | "block"
 
@@ -39,6 +39,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
   const [alertType, setAlertType] = useState<AlertType>();
   const [selectedUser, setSelectedUser] = useState<User>();
   const [openAddUserSheet, setOpenAddUserSheet] = useState(false);
+  const [openEditUserSheet, setOpenEditUserSheet] = useState(false);
 
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
@@ -186,11 +187,12 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
+                    setSelectedUser(user);
+                    setOpenEditUserSheet(true);
+                  }}>
                     <Edit/>
-                    <Link href={route('user.edit', user.id)}>
                       Edit
-                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => presentAlert(user, "delete")}>
                     <Trash2/>
@@ -250,8 +252,11 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
 
       {can(auth.user, 'manage-users') &&
         <div className="flex flex-1 flex-col gap-4 h-full">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <Button onClick={() => setOpenAddUserSheet(true)}>Create New User</Button>
+          <div className="flex items-center justify-between pr-10">
+            <div className="pl-4">
+              Manage User Configuration and Roles/Permissions
+            </div>
+            <Button onClick={() => setOpenAddUserSheet(true)}>Create New User</Button>
           </div>
           <div className="flex-1 rounded-xl bg-muted/50 h-full p-4">
             <DataTable columns={columns} data={users}/>
@@ -268,6 +273,16 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
               open={openAddUserSheet}
               onOpenChange={setOpenAddUserSheet}
             />
+
+            {selectedUser && openEditUserSheet && (
+              <EditUserSheet
+                selected={selectedUser}
+                open={openEditUserSheet}
+                onOpenChange={(openState) => {
+                  setSelectedUser(undefined);
+                  setOpenEditUserSheet(openState);
+                }}
+              />)}
 
             <Toaster />
           </div>

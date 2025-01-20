@@ -5,9 +5,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import {router, useForm} from "@inertiajs/react";
+import {useForm} from "@inertiajs/react";
 import {DialogProps} from "@radix-ui/react-dialog";
-import {Label} from "@headlessui/react";
 import {Input} from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import TextInput from "@/components/text-input";
@@ -16,23 +15,27 @@ import {Button} from "@/components/ui/button";
 import {FormEvent} from "react";
 import {toast} from "react-hot-toast";
 import InputLabel from "@/components/input-label";
+import {User} from "@/types";
+import {Avatar, AvatarFallback} from "@radix-ui/react-avatar";
+import {getAvatar} from "@/lib/utils";
+import {AvatarImage} from "@/components/ui/avatar";
 
 type FormType = {
   name: string,
   username: string,
   email: string,
-  password: string,
-  password_confirmation: string,
   image: File | undefined,
 }
 
-const AddUserSheet = ({onOpenChange, ...props}: DialogProps) => {
+type Props = DialogProps &{
+  selected: User,
+}
+
+const EditUserSheet = ({onOpenChange, selected, ...props}: Props) => {
   const {data, setData, post, errors, reset, processing} = useForm<FormType>({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
+    name: selected.name,
+    username: selected.username,
+    email: selected.email,
     image: undefined,
   });
 
@@ -50,9 +53,16 @@ const AddUserSheet = ({onOpenChange, ...props}: DialogProps) => {
   return <Sheet onOpenChange={onOpenChange} {...props}>
     <SheetContent>
       <SheetHeader>
-        <SheetTitle>Create a New User</SheetTitle>
+        <SheetTitle>Edit User: {selected.name}</SheetTitle>
         <SheetDescription/>
       </SheetHeader>
+      <Avatar>
+        <div className="w-24 h-24 items-center mx-auto bg-slate-100 text-center content-center overflow-hidden bg-clip-content rounded-full mt-5 text-4xl">
+          <AvatarImage src={selected.avatar} />
+          <AvatarFallback>{getAvatar(selected.name)}</AvatarFallback>
+        </div>
+      </Avatar>
+
       <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
         <div className="space-y1 col-span-full">
           <InputLabel>Full Name</InputLabel>
@@ -66,6 +76,7 @@ const AddUserSheet = ({onOpenChange, ...props}: DialogProps) => {
           <InputLabel>Username</InputLabel>
           <TextInput
             value={data.username}
+            className="w-full col-span-full"
             onChange={(e) => setData("username", e.target.value)}
           />
           <InputError message={errors.username}/>
@@ -88,31 +99,13 @@ const AddUserSheet = ({onOpenChange, ...props}: DialogProps) => {
           />
           <InputError message={errors.image}/>
         </div>
-        <div className="space-y1 w-full">
-          <InputLabel>Password</InputLabel>
-          <TextInput
-            value={data.password}
-            type="password"
-            onChange={(e) => setData("password", e.target.value)}
-          />
-          <InputError message={errors.password}/>
-        </div>
-        <div className="space-y1 w-full">
-          <InputLabel>Password Confirmation</InputLabel>
-          <TextInput
-            value={data.password_confirmation}
-            type="password"
-            onChange={(e) => setData("password_confirmation", e.target.value)}
-          />
-          <InputError message={errors.password_confirmation}/>
-        </div>
         <Button disabled={processing}>
           {processing && <Loader2 className="w-4 h-4 mr-2 animate-spin"/>}
-          {!processing ? "Save" : "Saving..."}
+          {!processing ? "Updated" : "Updating..."}
         </Button>
       </form>
     </SheetContent>
   </Sheet>
 }
 
-export default AddUserSheet;
+export default EditUserSheet;
