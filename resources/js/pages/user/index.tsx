@@ -220,7 +220,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
-          toast.success("User status has been update successfully!");
+          toast.success(`${selectedUser?.name} status has been updated!`);
           setSelectedUser(undefined);
         }
       })
@@ -236,12 +236,13 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         <div className="flex flex-1 flex-col gap-4 h-full">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
           </div>
+          <Button>Create New User</Button>
           <div className="flex-1 rounded-xl bg-muted/50 h-full p-4">
             <DataTable columns={columns} data={users}/>
 
             <ConfirmAlert
               title={`Confirm ${alertType}`}
-              message={`Are you sure you want to ${alertType}?`}
+              message={`Are you sure you want to ${alertType} ${selectedUser?.name}?`}
               open={openAlert}
               onOpenChange={setOpenAlert}
               onConfirm={alertType === "delete" ? handleDelete : handleUpdateStatus}
