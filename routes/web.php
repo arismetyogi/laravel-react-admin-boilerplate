@@ -20,7 +20,10 @@ Route::middleware('auth')->group(function () {
         })->name('dashboard');
 
         Route::middleware(['can:'.Permissions::ManageUsers->value])->group(function () {
-            Route::resource('user', UserController::class);
+            Route::resource('user', UserController::class)->except([
+                'show'
+            ]);
+            Route::post('user/{user}', [UserController::class, 'update_status'])->name('user.status');
         });
     });
 

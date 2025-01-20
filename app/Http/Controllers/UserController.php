@@ -25,6 +25,24 @@ class UserController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->has('image')) {
+            $fileUrl = $request->file('image')->store('avatars', 'public');
+            $validated['avatar'] = $fileUrl;
+        }
+
+        User::create($validated);
+        return back();
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -55,4 +73,20 @@ class UserController extends Controller
         return redirect()->to(route('user.index'))->with(['success' => 'User roles and permissions has been updated']);
     }
 
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return back();
+    }
+
+    public function update_status(User $user, Request $request)
+    {
+        $request->validate([
+            'status' => ['required', 'lowercase', 'in:block,activate'],
+        ]);
+        $user->is_active = $request->status === 'activate';
+        $user->save();
+
+        return back();
+    }
 }
