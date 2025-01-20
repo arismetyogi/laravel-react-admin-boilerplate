@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enum\Permissions;
 use App\Enum\Roles;
-use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -20,8 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        Return Inertia::render('user/index', [
-        'users' => AuthUserResource::collection(User::all())->collection->toArray(),
+        $users = User::orderByDesc('created_at')->get();
+
+        return Inertia::render('user/index', [
+        'users' => UserResource::collection($users)->collection->toArray(),
         ]);
     }
 
@@ -31,7 +31,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return Inertia::render('user/edit', [
-            'user' => new AuthUserResource($user),
+            'user' => new UserResource($user),
             'roles' => Role::all(),
             'roleLabels' => Roles::labels(),
             'permissions' => Permission::all(),

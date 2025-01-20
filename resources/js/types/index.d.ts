@@ -7,6 +7,9 @@ export interface User {
   username: string;
   name: string;
   email: string;
+  avatar: string;
+  is_active: boolean;
+  created_at: string;
   email_verified_at?: string;
   roles: string[];
   permissions: string[];
