@@ -43,6 +43,17 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
+        id: "#",
+        accessorKey: "#",
+        header: ({column}) => <ColumnHeader column={column} title="#"/>,
+        enableSorting: false,
+        cell: ({row, table}) => {
+          const nonSortedIdx =
+            table.getSortedRowModel()?.flatRows?.findIndex((flatRow) => flatRow.id === row.id) || 0
+          return <div className="w-fit pl-4">{nonSortedIdx + 1}{' '}</div>;
+        },
+      },
+      {
         id: "avatar",
         header: ({column}) => <ColumnHeader column={column} title=""/>,
         enableSorting: false,
@@ -71,9 +82,9 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
 
           return (
             <div>
-              <span className="text-gray-800">{email}</span>
+              <span className="text-gray-800 dark:text-white">{email}</span>
               <br />
-              <span className="text-sm text-gray-400">{username}</span>
+              <span className="text-xs text-gray-400">{username}</span>
             </div>
           );
         },
@@ -109,6 +120,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         }
       },
       {
+        id: "roles",
         accessorKey: "roles",
         header: ({column}) => <ColumnHeader column={column} title="Roles"/>,
         cell: ({row}) => (
@@ -137,6 +149,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         )
       },
       {
+        id: "permissions",
         accessorKey: "permissions",
         header: ({column}) => <ColumnHeader column={column} title="Permissions"/>,
         cell:
@@ -156,6 +169,7 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
           ),
       },
       {
+        id: "action",
         accessorKey: "action",
         header: ({column}) => <ColumnHeader column={column} title="Action"/>,
         enableSorting: false,
