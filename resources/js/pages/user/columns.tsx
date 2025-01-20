@@ -57,19 +57,17 @@ columns = [
         </Button>
       )
     },
-  },
-  {
-    accessorKey: "email",
-    header: ({column}) => {
+    cell: ({ row }) => {
+      const username:string = row.getValue("username");
+      const email:string = row.original.email;
+
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
-        </Button>
-      )
+        <div>
+          <span className="text-gray-800">{email}</span>
+          <br />
+          <span className="text-sm text-gray-400">{username}</span>
+        </div>
+      );
     },
   },
   {
