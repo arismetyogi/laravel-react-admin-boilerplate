@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        JsonResource::withoutWrapping();
+        JsonResource::withoutWrapping(); //remove data wrapper
         Vite::prefetch(concurrency: 3);
     }
 }
