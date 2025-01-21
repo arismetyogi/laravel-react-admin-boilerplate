@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/layouts/authenticated-layout";
-import {Head, router} from "@inertiajs/react";
+import {Head, router, usePage} from "@inertiajs/react";
 import {PageProps, User} from "@/types";
 import {can, ucwords} from "@/helper";
 import {DataTable} from "@/components/table/data-table";
@@ -29,16 +29,27 @@ import toast, { Toaster } from "react-hot-toast";
 import ConfirmAlert from "@/components/confirm-alert";
 import AddUserSheet from "@/components/add-user-sheet";
 import EditUserSheet from "@/components/edit-user-sheet";
+import UpdateUserPermissionsSheet from "@/components/update-user-permissions-sheet";
 
 type AlertType = "delete" | "activate" | "block"
 
-const Index = ({auth, users}: PageProps<{ users: User[] }>) => {
+interface SharedProps extends PageProps {
+  roles: string[];
+  permissions: string[];
+  roleLabels: Record<string, string>;
+  permissionLabels: Record<string, string>;
+}
+
+const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
 
   const [openAlert, setOpenAlert] = useState(false);
   const [alertType, setAlertType] = useState<AlertType>();
   const [selectedUser, setSelectedUser] = useState<User>();
   const [openAddUserSheet, setOpenAddUserSheet] = useState(false);
   const [openEditUserSheet, setOpenEditUserSheet] = useState(false);
+  const [openEditPermissionSheet, setOpenEditPermissionSheet] = useState(false);
+
+  const {roles, permissions, roleLabels, permissionLabels} = usePage().props as unknown as SharedProps;
 
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
@@ -195,6 +206,12 @@ const Index = ({auth, users}: PageProps<{ users: User[] }>) => {
                   }}>
                     <Edit /> Edit
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
+                    setSelectedUser(user);
+                    setOpenEditPermissionSheet(true);
+                  }}>
+                    <Edit /> Update Roles
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => presentAlert(user, "delete")}>
                     <Trash2 /> Delete
                   </DropdownMenuItem>
@@ -281,6 +298,21 @@ const Index = ({auth, users}: PageProps<{ users: User[] }>) => {
                 onOpenChange={(openState) => {
                   setSelectedUser(undefined);
                   setOpenEditUserSheet(openState);
+                }}
+              />
+            )}
+
+            {selectedUser && openEditPermissionSheet && (
+              <UpdateUserPermissionsSheet
+                selected={selectedUser}
+                open={openEditPermissionSheet}
+                roles={roles}
+                roleLabels={roleLabels}
+                permissions={permissions}
+                permissionLabels={permissionLabels}
+                onOpenChange={(openState) => {
+                  setSelectedUser(undefined);
+                  setOpenEditPermissionSheet(openState);
                 }}
               />
             )}
