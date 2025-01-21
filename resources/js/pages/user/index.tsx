@@ -10,7 +10,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {cn, getAvatar} from "@/lib/utils";
 import {
   CheckCircle2Icon,
-  Edit,
+  Edit, GraduationCap, Key,
   LockKeyhole,
   LockKeyholeOpen,
   MoreHorizontal,
@@ -22,7 +22,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
+  DropdownMenuLabel, DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import toast, { Toaster } from "react-hot-toast";
@@ -30,6 +30,7 @@ import ConfirmAlert from "@/components/confirm-alert";
 import AddUserSheet from "@/components/add-user-sheet";
 import EditUserSheet from "@/components/edit-user-sheet";
 import UpdateUserPermissionsSheet from "@/components/update-user-permissions-sheet";
+import UpdateUserRoleSheet from "@/components/update-user-roles-sheet";
 
 type AlertType = "delete" | "activate" | "block"
 
@@ -48,6 +49,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
   const [openAddUserSheet, setOpenAddUserSheet] = useState(false);
   const [openEditUserSheet, setOpenEditUserSheet] = useState(false);
   const [openEditPermissionSheet, setOpenEditPermissionSheet] = useState(false);
+  const [openEditRoleSheet, setOpenEditRoleSheet] = useState(false);
 
   const {roles, permissions, roleLabels, permissionLabels} = usePage().props as unknown as SharedProps;
 
@@ -200,6 +202,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuSeparator/>
                   <DropdownMenuItem onClick={() => {
                     setSelectedUser(user);
                     setOpenEditUserSheet(true);
@@ -208,9 +211,15 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => {
                     setSelectedUser(user);
+                    setOpenEditRoleSheet(true);
+                  }}>
+                    <GraduationCap /> Update Role
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
+                    setSelectedUser(user);
                     setOpenEditPermissionSheet(true);
                   }}>
-                    <Edit /> Update Roles
+                    <Key /> Update Permissions
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => presentAlert(user, "delete")}>
                     <Trash2 /> Delete
@@ -302,12 +311,23 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
               />
             )}
 
+            {selectedUser && openEditRoleSheet && (
+              <UpdateUserRoleSheet
+                selected={selectedUser}
+                open={openEditRoleSheet}
+                roles={roles}
+                roleLabels={roleLabels}
+                onOpenChange={(openState) => {
+                  setSelectedUser(undefined);
+                  setOpenEditRoleSheet(openState);
+                }}
+              />
+            )}
+
             {selectedUser && openEditPermissionSheet && (
               <UpdateUserPermissionsSheet
                 selected={selectedUser}
                 open={openEditPermissionSheet}
-                roles={roles}
-                roleLabels={roleLabels}
                 permissions={permissions}
                 permissionLabels={permissionLabels}
                 onOpenChange={(openState) => {

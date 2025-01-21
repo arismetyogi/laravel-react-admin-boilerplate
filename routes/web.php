@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('users', UserController::class)->except(['update']);
             Route::post('users/{user}', [UserController::class, 'updateStatus'])->name('users.status');
             Route::post('users/{user}/update', [UserController::class, 'update'])->name('users.update');
+            Route::post('users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update-role');
             Route::post('users/{user}/update-permissions', [UserController::class, 'updatePermissions'])->name('users.update-permissions');
         });
     });

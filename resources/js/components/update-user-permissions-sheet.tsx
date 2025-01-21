@@ -24,8 +24,6 @@ import Checkbox from "@/components/checkbox";
 
 type Props = DialogProps & {
   selected: User,
-  roles: string[],
-  roleLabels: Record<string, string>,
   permissions: string[],
   permissionLabels: Record<string, string>,
 }

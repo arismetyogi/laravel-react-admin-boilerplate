@@ -114,11 +114,9 @@ class UserController extends Controller
     public function updatePermissions(Request $request, User $user)
     {
         $validated = $request->validate([
-//            'roles' => ['sometimes', 'array'],
             'permissions' => ['sometimes', 'array'],
         ]);
 
-//        $user->syncRoles($validated['roles']);
         $user->syncPermissions($validated['permissions']);
 
         return back();
