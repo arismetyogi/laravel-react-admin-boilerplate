@@ -145,16 +145,16 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
               ? row.original.roles.map((role: string, index: number) => {
                 const roleColor =
                   role === "admin"
-                    ? "text-blue-700"
+                    ? "text-blue-700 dark:text-blue-400"
                     : role === "user"
-                      ? "text-gray-700"
+                      ? "text-gray-700 dark:text-gray-400"
                       : role === "super-admin"
-                        ? "text-red-700"
-                        : "text-green-700"; // Default color for other roles
+                        ? "text-red-700 dark:text-red-400"
+                        : "text-green-700 dark:text-green-400"; // Default color for other roles
                 return (
                   <span
                     key={index}
-                    className={`inline-block px-2 font-normal ${roleColor}`}
+                    className={`inline-block px-2 text-xs lg:text-sm font-normal  ${roleColor}`}
                   >
             {role == 'user' ? 'User' : (role == 'admin' ? 'Admin' : 'Super Admin')}
           </span>
