@@ -95,7 +95,7 @@ const data = {
       items: [
         {
           title: "Users",
-          url: "/user",
+          url: "/users",
         },
       ],
     },

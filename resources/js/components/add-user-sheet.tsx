@@ -38,7 +38,7 @@ const AddUserSheet = ({onOpenChange, ...props}: DialogProps) => {
 
   const handleSubmit =  (e: FormEvent) => {
     e.preventDefault();
-    post(route('user.store'), {
+    post(route('users.store'), {
       onSuccess: () => {
         toast.success("New user has been created successfully.");
         reset();

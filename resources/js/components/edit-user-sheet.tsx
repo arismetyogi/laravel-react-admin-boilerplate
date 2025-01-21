@@ -19,6 +19,7 @@ import {User} from "@/types";
 import {Avatar, AvatarFallback} from "@radix-ui/react-avatar";
 import {getAvatar} from "@/lib/utils";
 import {AvatarImage} from "@/components/ui/avatar";
+import {ucwords} from "@/helper";
 
 type FormType = {
   name: string,
@@ -27,7 +28,7 @@ type FormType = {
   image: File | undefined,
 }
 
-type Props = DialogProps &{
+type Props = DialogProps & {
   selected: User,
 }
 
@@ -39,26 +40,30 @@ const EditUserSheet = ({onOpenChange, selected, ...props}: Props) => {
     image: undefined,
   });
 
-  const handleSubmit =  (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    post(route('user.store'), {
-      onSuccess: () => {
-        toast.success("New user has been created successfully.");
-        reset();
-        onOpenChange?.(false); //Close sheet on success
-      },
-    });
+
+    post(route('users.update', selected.id),
+      {
+        onSuccess: () => {
+          toast.success(`${selected.name}'s data have been updated successfully.`);
+          reset();
+          onOpenChange?.(false); //Close sheet on success
+        },
+      });
   };
 
   return <Sheet onOpenChange={onOpenChange} {...props}>
     <SheetContent>
       <SheetHeader>
-        <SheetTitle>Edit User: {selected.name}</SheetTitle>
+        <SheetTitle>Edit User: {ucwords(selected.name)}</SheetTitle>
         <SheetDescription/>
       </SheetHeader>
+
       <Avatar>
-        <div className="w-24 h-24 items-center mx-auto bg-slate-100 text-center content-center overflow-hidden bg-clip-content rounded-full mt-5 text-4xl">
-          <AvatarImage src={selected.avatar} />
+        <div
+          className="w-24 h-24 items-center mx-auto bg-slate-100 text-center content-center overflow-hidden bg-clip-content rounded-full mt-5 text-4xl">
+          <AvatarImage src={selected.avatar}/>
           <AvatarFallback>{getAvatar(selected.name)}</AvatarFallback>
         </div>
       </Avatar>
@@ -99,9 +104,9 @@ const EditUserSheet = ({onOpenChange, selected, ...props}: Props) => {
           />
           <InputError message={errors.image}/>
         </div>
-        <Button disabled={processing}>
+        <Button disabled={processing} className={"w-fit px-10 mx-auto"}>
           {processing && <Loader2 className="w-4 h-4 mr-2 animate-spin"/>}
-          {!processing ? "Updated" : "Updating..."}
+          {!processing ? "Update" : "Updating..."}
         </Button>
       </form>
     </SheetContent>

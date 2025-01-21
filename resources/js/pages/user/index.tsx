@@ -1,9 +1,8 @@
 import AuthenticatedLayout from "@/layouts/authenticated-layout";
-import {Head, Link, router} from "@inertiajs/react";
+import {Head, router} from "@inertiajs/react";
 import {PageProps, User} from "@/types";
-import {can} from "@/helper";
+import {can, ucwords} from "@/helper";
 import {DataTable} from "@/components/table/data-table";
-// import {columns} from "@/pages/user/columns";
 import {useMemo, useState} from "react";
 import {ColumnDef} from "@tanstack/react-table";
 import ColumnHeader from "@/components/table/column-header";
@@ -33,7 +32,7 @@ import EditUserSheet from "@/components/edit-user-sheet";
 
 type AlertType = "delete" | "activate" | "block"
 
-export default function Index({auth, users}: PageProps<{ users: User[] }>) {
+const Index = ({auth, users}: PageProps<{ users: User[] }>) => {
 
   const [openAlert, setOpenAlert] = useState(false);
   const [alertType, setAlertType] = useState<AlertType>();
@@ -71,6 +70,9 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         header: ({column}) => <ColumnHeader column={column} title="Name"/>,
         enableSorting: true,
         accessorKey: "name",
+        cell: ({row}) =>{
+          return ucwords(row.original.name);
+        }
       },
       {
         id: "username",
@@ -91,10 +93,10 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
         },
       },
       {
-        id: "status",
+        id: "is_active",
         header: ({column}) => <ColumnHeader column={column} title="Status"/>,
         enableSorting: true,
-        accessorKey: "status",
+        accessorKey: "is_active",
         cell: ({row}) => {
           const user = row.original;
           return <div className={cn("inline-block px-2 py-0.5 rounded-md", user.is_active ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700")}>
@@ -191,12 +193,10 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
                     setSelectedUser(user);
                     setOpenEditUserSheet(true);
                   }}>
-                    <Edit/>
-                      Edit
+                    <Edit /> Edit
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => presentAlert(user, "delete")}>
-                    <Trash2/>
-                    Delete
+                    <Trash2 /> Delete
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
@@ -221,24 +221,24 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
   }
 
   const handleDelete = () => {
-    router.delete(route('user.destroy', selectedUser?.id), {
+    router.delete(route('users.destroy', selectedUser?.id), {
       preserveState: true,
       preserveScroll: true,
       onSuccess: () => {
-        toast.success("User has been deleted!");
+        toast.success(`${selectedUser?.name}'s account has been deleted!`);
         setSelectedUser(undefined);
       },
     });
   }
 
   const handleUpdateStatus = () => {
-    router.post(route('user.status', selectedUser?.id),
+    router.post(route('users.status', selectedUser?.id),
       {status: alertType},
       {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(`${selectedUser?.name} status has been updated!`);
+          toast.success(`${selectedUser?.name}'s status has been updated!`);
           setSelectedUser(undefined);
         }
       })
@@ -282,7 +282,8 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
                   setSelectedUser(undefined);
                   setOpenEditUserSheet(openState);
                 }}
-              />)}
+              />
+            )}
 
             <Toaster />
           </div>
@@ -291,3 +292,5 @@ export default function Index({auth, users}: PageProps<{ users: User[] }>) {
     </AuthenticatedLayout>
   );
 }
+
+export default Index;

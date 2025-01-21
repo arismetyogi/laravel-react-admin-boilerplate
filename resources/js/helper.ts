@@ -10,3 +10,9 @@ export function hasRole(user: User, role: string): boolean {
   return user.roles.includes(role);
 }
 
+export const ucwords = (str: string) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};

@@ -67,11 +67,14 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'username' => 'required',
+            'username' => [
+                'required',
+                Rule::unique('users','username')->ignore($user),
+                ],
             'email' => [
                 'sometimes',
                 'email',
-                Rule::unique('users', 'email')->ignore($user->id),
+                Rule::unique('users', 'email')->ignore($user),
                 ],
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -98,10 +101,10 @@ class UserController extends Controller
         return back();
     }
 
-    public function update_status(User $user, Request $request)
+    public function updateStatus(User $user, Request $request)
     {
         $request->validate([
-            'status' => ['required', 'lowercase', 'in:block,activate'],
+            'status' => ['sometimes', 'lowercase', 'in:block,activate'],
         ]);
         $user->is_active = $request->status === 'activate';
         $user->save();
