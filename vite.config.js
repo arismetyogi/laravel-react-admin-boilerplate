@@ -12,5 +12,9 @@ export default defineConfig({
     ],
     build: {
         sourcemap: true,
-    }
+    },
+    // server: {
+    //     host: 'localhost', // Listen on all interfaces
+    //     port: 5173,
+    // },
 });

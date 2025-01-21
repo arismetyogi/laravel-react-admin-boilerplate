@@ -209,6 +209,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
                   }}>
                     <Edit /> Edit
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator/>
                   <DropdownMenuItem onClick={() => {
                     setSelectedUser(user);
                     setOpenEditRoleSheet(true);
@@ -221,8 +222,9 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
                   }}>
                     <Key /> Update Permissions
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator/>
                   <DropdownMenuItem onClick={() => presentAlert(user, "delete")}>
-                    <Trash2 /> Delete
+                    <Trash2 className="text-orange-700" /> Delete
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
@@ -287,6 +289,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
           <div className="flex-1 rounded-xl bg-muted/50 h-full p-4">
             <DataTable columns={columns} data={users}/>
 
+            {/*alert*/}
             <ConfirmAlert
               title={`Confirm ${alertType}`}
               message={`Are you sure you want to ${alertType} ${selectedUser?.name}?`}
@@ -295,6 +298,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
               onConfirm={alertType === "delete" ? handleDelete : handleUpdateStatus}
             />
 
+            {/*User crud forms*/}
             <AddUserSheet
               open={openAddUserSheet}
               onOpenChange={setOpenAddUserSheet}
@@ -337,6 +341,7 @@ const Index = ({auth, users}: PageProps<{ users: User[]}>) => {
               />
             )}
 
+            {/*Notification*/}
             <Toaster />
           </div>
         </div>
