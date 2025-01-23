@@ -28,9 +28,6 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::post('/logout', function () {
-        return redirect('/login');
-    });
 });
 
 require __DIR__.'/auth.php';
