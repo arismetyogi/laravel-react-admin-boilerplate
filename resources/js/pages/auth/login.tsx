@@ -1,6 +1,6 @@
 import {FormEventHandler, useEffect} from "react";
 import GuestLayout from "@/layouts/guest-layout";
-import {Head, Link, useForm} from "@inertiajs/react";
+import {Head, Link, router, useForm} from "@inertiajs/react";
 import {
   Card,
   CardContent,
@@ -49,7 +49,7 @@ export default function Login({
         // console.error("Unexpected error:", error);
       }
     }
-    post(route("login"));
+    router.post(route("login"));
   };
 
   return (
