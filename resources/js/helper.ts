@@ -1,4 +1,5 @@
 import {User} from "@/types";
+import axiosInstance from "@/lib/axios";
 
 export function can(user: User, permission: string): boolean {
   if (!user || !user.permissions) return false;

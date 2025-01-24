@@ -39,16 +39,17 @@ export default function Login({
     e.preventDefault();
     setError({creds: "", password: "", remember: "", email: "", username: ""}); // Clear errors before submitting
 
-    try {
-      const response = await axios.post("/login", data);
-      // console.log(response.data); // Handle successful login
-    } catch (error: any) {
-      if (error.response && error.response.data.errors) {
-        setError(error.response.data.errors); // Set validation errors
-      } else {
-        // console.error("Unexpected error:", error);
-      }
-    }
+    // try {
+    //   const response = await axios.post("/login", data);
+    //   // console.log('Logged in successfully:', response.data); // Handle successful login
+    // } catch (error: any) {
+    //   if (error.response && error.response.data.errors) {
+    //     setError(error.response.data.errors); // Set validation errors
+    //   } else {
+    //     // console.error("Unexpected error:", error);
+    //   }
+    // }
+
     router.post(route("login"));
   };
 
