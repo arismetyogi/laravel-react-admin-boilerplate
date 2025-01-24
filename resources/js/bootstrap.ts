@@ -10,3 +10,10 @@ if (token) {
 } else {
   console.error("CSRF token not found: Ensure you have a <meta name='csrf-token'> tag in your layout.");
 }
+
+// Ensure CSRF token is set automatically
+axios.get('/sanctum/csrf-cookie').then(() => {
+  console.log('CSRF cookie set successfully.');
+});
+
+// All Axios requests will now automatically include the CSRF token from cookies
